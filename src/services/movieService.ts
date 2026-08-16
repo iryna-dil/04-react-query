@@ -1,15 +1,26 @@
 import axios from "axios";
 
-import type { MoviesApiResponse } from "../types/movie";
+import type { Movie } from "../types/movie";
 
-const API_KEY = "90b3e7854c2cc0919f338946b802956b";
+export interface MoviesApiResponse {
+  page: number;
+  results: Movie[];
+  total_pages: number;
+  total_results: number;
+}
+
+const apiKey = import.meta.env.VITE_TMDB_API_KEY;
+const accessToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 
 export const fetchMovies = async (query: string, page: number) => {
   const { data } = await axios.get<MoviesApiResponse>(
     "https://api.themoviedb.org/3/search/movie",
     {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       params: {
-        api_key: API_KEY,
+        api_key: apiKey,
         query,
         page,
       },
@@ -17,10 +28,4 @@ export const fetchMovies = async (query: string, page: number) => {
   );
 
   return data;
-};
-
-export const toggleFavoriteMovie = async (movieId: number) => {
-  await new Promise((resolve) => setTimeout(resolve, 250));
-
-  return { id: movieId, savedAt: new Date().toISOString() };
 };

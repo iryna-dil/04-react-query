@@ -5,12 +5,12 @@ import css from "./MovieGrid.module.css";
 interface MovieGridProps {
   movies: Movie[];
   isLoading: boolean;
-  onToggleFavorite: (movieId: number) => void;
+  onSelect: (movie: Movie) => void;
 }
 
 const imageBaseUrl = "https://image.tmdb.org/t/p/w185";
 
-const MovieGrid = ({ movies, isLoading, onToggleFavorite }: MovieGridProps) => {
+const MovieGrid = ({ movies, isLoading, onSelect }: MovieGridProps) => {
   if (isLoading) {
     return <div className={css.loading}>Loading movies...</div>;
   }
@@ -35,6 +35,8 @@ const MovieGrid = ({ movies, isLoading, onToggleFavorite }: MovieGridProps) => {
                 : "https://via.placeholder.com/185x278?text=No+Poster"
             }
             alt={movie.title}
+            onClick={() => onSelect(movie)}
+            style={{ cursor: "pointer" }}
           />
           <div className={css.info}>
             <h2 className={css.title}>{movie.title}</h2>
@@ -47,15 +49,6 @@ const MovieGrid = ({ movies, isLoading, onToggleFavorite }: MovieGridProps) => {
             <p className={css.overview}>
               {movie.overview || "No description available."}
             </p>
-            <button
-              type="button"
-              className={
-                movie.isFavorite ? css.favoriteButtonActive : css.favoriteButton
-              }
-              onClick={() => onToggleFavorite(movie.id)}
-            >
-              {movie.isFavorite ? "Removing favorite" : "Add to favorites"}
-            </button>
           </div>
         </li>
       ))}

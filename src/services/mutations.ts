@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import type { MoviesApiResponse } from "../types/movie";
+import type { Movie, MoviesApiResponse } from "../types/movie";
 import { movieKeys } from "./queryKeys";
 import { toggleFavoriteMovie } from "./api";
 
@@ -30,7 +30,7 @@ export const useToggleFavoriteMovie = (query: string, page: number) => {
 
         return {
           ...current,
-          results: current.results.map((movie) =>
+          results: current.results.map((movie: Movie) =>
             movie.id === movieId
               ? { ...movie, isFavorite: !movie.isFavorite }
               : movie,
