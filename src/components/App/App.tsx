@@ -5,8 +5,8 @@ import type { ComponentType } from "react";
 
 import SearchForm from "../SearchForm/SearchForm";
 import MovieList from "../MovieList/MovieList";
-import { useMoviesQuery } from "../../features/movies/queries";
-import { useToggleFavoriteMovie } from "../../features/movies/mutations";
+import { useMoviesQuery } from "../../services/queries";
+import { useToggleFavoriteMovie } from "../../services/mutations";
 
 import css from "./App.module.css";
 
